@@ -24,10 +24,3 @@
   * Text response
   * Asking for a response in JSON
   * [Source](./gollama/ex5/main.go)
-
-## Using curl
-
-The following examples uses `curl`.
-
-* [Example 1](./curl/ex1.sh) - As per Go example 1.
-* [Example 2](./curl/ex2.sh) - As per Go example 2.
