@@ -1,4 +1,4 @@
-# Our Journey into LLM-Powered Applications
+# AI Agent Programming Examples
 
 Welcome to our journal, a collection of our thoughts and discoveries as we explore the exciting world of building applications that interact with Large Language Models (LLMs). Our focus here is on the practical side of things: creating software that can harness the power of LLMs to create what we've been calling 'AI Agents'.
 
@@ -6,15 +6,13 @@ We're using the term 'AI Agent' a bit loosely here to describe applications that
 
 It's important to note that this project is not about the AI models themselves. We're not building or fine-tuning models here. Instead, we're focused on the layer above: the applications that use these models to do interesting things.
 
-Join us on this journey as we learn, experiment, and share our findings.
+> NOTE: The working examples here are written in Go.
 
 For a list of contributors to this project, please see the [CONTRIBUTORS](./CONTRIBUTORS) file.
 
-## Topics
+## Working Examples
 
-* [Ollama](./ollama/doc.md)
-* [Llama.cpp](./llamacpp/doc.md)
-* [LM Studio](./lm-studio/doc.md)
+* [House Pricing Agent](./docs/house-price.md)
 
 ## Disclaimer
 

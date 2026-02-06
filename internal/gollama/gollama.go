@@ -9,16 +9,16 @@ const (
 )
 
 type RequestGenerate struct {
-	Model     string      `json:"model"`
-	Prompt    string      `json:"prompt"`
-	Suffix    string      `json:"suffix,omitempty"`
-	Images    []string    `json:"images,omitempty"`
-	Format    string      `json:"format,omitempty"`
-	Options   interface{} `json:"options,omitempty"`
-	System    string      `json:"system,omitempty"`
-	Raw       bool        `json:"raw,omitempty"`
-	KeepAlive string      `json:"keep_alive,omitempty"`
-	Stream    bool        `json:"stream"`
+	Model     string   `json:"model"`
+	Prompt    string   `json:"prompt"`
+	Suffix    string   `json:"suffix,omitempty"`
+	Images    []string `json:"images,omitempty"`
+	Format    string   `json:"format,omitempty"`
+	Options   any      `json:"options,omitempty"`
+	System    string   `json:"system,omitempty"`
+	Raw       bool     `json:"raw,omitempty"`
+	KeepAlive string   `json:"keep_alive,omitempty"`
+	Stream    bool     `json:"stream"`
 }
 
 type ResponseGenerate struct {
