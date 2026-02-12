@@ -1,4 +1,4 @@
-package dataops
+package data
 
 import (
 	"bytes"
@@ -15,7 +15,7 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-type Transaction struct {
+type House struct {
 	UniqueID     string
 	Price        uint64
 	DeedDate     time.Time
@@ -65,10 +65,10 @@ func ParsePrice(price string) (uint64, error) {
 	return p, nil
 }
 
-func ProcessCSV(reader *bytes.Reader) ([]Transaction, error) {
+func ProcessCSV(reader *bytes.Reader) ([]House, error) {
 	csvr := csv.NewReader(reader)
 	csvr.Read() // Remove holder
-	txns := []Transaction{}
+	txns := []House{}
 loop:
 	for {
 		rec, err := csvr.Read()
@@ -79,31 +79,31 @@ loop:
 			log.Println(err)
 			continue loop
 		}
-		txn := Transaction{}
-		txn.UniqueID = rec[0]
+		house := House{}
+		house.UniqueID = rec[0]
 		p, err := ParsePrice(rec[1])
 		if err != nil {
 			continue loop
 		}
-		txn.Price = p
+		house.Price = p
 		d, err := ParseDate(rec[2])
 		if err != nil {
-			txn.DeedDate = d
+			house.DeedDate = d
 		}
-		txn.PostCode = rec[3]
-		txn.PropertyType = rec[4]
-		txn.NewBuild = rec[5]
-		txn.EstateType = rec[6]
-		txn.SAON = rec[7]
-		txn.PAON = rec[8]
-		txn.Street = rec[9]
-		txn.Locality = rec[10]
-		txn.Town = rec[11]
-		txn.District = rec[12]
-		txn.County = rec[13]
-		txn.Category = rec[14]
-		txn.URI = rec[15]
-		txns = append(txns, txn)
+		house.PostCode = rec[3]
+		house.PropertyType = rec[4]
+		house.NewBuild = rec[5]
+		house.EstateType = rec[6]
+		house.SAON = rec[7]
+		house.PAON = rec[8]
+		house.Street = rec[9]
+		house.Locality = rec[10]
+		house.Town = rec[11]
+		house.District = rec[12]
+		house.County = rec[13]
+		house.Category = rec[14]
+		house.URI = rec[15]
+		txns = append(txns, house)
 	}
 	return txns, nil
 }
@@ -138,7 +138,7 @@ func CreateTable(db *sql.DB) error {
 	return nil
 }
 
-func PersistData(db *sql.DB, data []Transaction) error {
+func PersistData(db *sql.DB, data []House) error {
 	rawSQL := fmt.Sprintf(`INSERT INTO %[1]s(
 %[2]s,%[3]s,%[4]s,%[5]s,%[6]s,%[7]s,%[8]s,%[9]s,%[10]s,%[11]s,%[12]s,%[13]s,%[14]s,%[15]s,%[16]s,%[17]s) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`, tblName, uniqueID, price, deedDate, postCode, propertyType, newBuild, estateType, saon, paqn, street, locality, town, district, county, category, uri)
 
@@ -169,7 +169,7 @@ func PersistData(db *sql.DB, data []Transaction) error {
 	return nil
 }
 
-func ListAll(db *sql.DB) ([]Transaction, error) {
+func ListAll(db *sql.DB) ([]House, error) {
 
 	rawSQL := fmt.Sprintf("SELECT * FROM %s", tblName)
 	stmt, err := db.Prepare(rawSQL)
@@ -183,9 +183,9 @@ func ListAll(db *sql.DB) ([]Transaction, error) {
 	}
 	defer rows.Close()
 
-	var txns []Transaction
+	var txns []House
 	for rows.Next() {
-		txn := Transaction{}
+		txn := House{}
 		var deedDate string
 		rows.Scan(&txn.UniqueID,
 			&txn.Price,

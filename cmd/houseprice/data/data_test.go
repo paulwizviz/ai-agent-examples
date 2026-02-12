@@ -1,4 +1,4 @@
-package dataops
+package data
 
 import (
 	"aiagent/internal/sqlops"
@@ -51,7 +51,7 @@ func Example_createTable() {
 	}
 	fmt.Println("Table Created")
 
-	data := []Transaction{
+	data := []House{
 		{
 			UniqueID: "1",
 			Price:    uint64(1000),
